@@ -10,6 +10,7 @@ module Reflex.Dom.SemanticUI
   , module Reflex.Dom.SemanticUI.Label
   , module Reflex.Dom.SemanticUI.Form
   , module Reflex.Dom.SemanticUI.Field
+  , module Reflex.Dom.SemanticUI.Container
   , semanticCSS
   ) where
 
@@ -26,6 +27,7 @@ import           Reflex.Dom.SemanticUI.Modal
 import           Reflex.Dom.SemanticUI.Label
 import           Reflex.Dom.SemanticUI.Form
 import           Reflex.Dom.SemanticUI.Field
+import           Reflex.Dom.SemanticUI.Container
 ------------------------------------------------------------------------------
 
 
