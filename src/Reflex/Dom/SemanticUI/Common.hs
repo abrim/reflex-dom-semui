@@ -348,17 +348,6 @@ class UiHasCircular a where
 
 
 ------------------------------------------------------------------------------
-data UiError = UiError
-  deriving (Eq,Ord,Read,Show,Enum,Bounded)
-
-instance UiClassText UiError where
-  uiText UiError = "error"
-
-class UiHasError a where
-  hasError :: a -> a
-
-
-------------------------------------------------------------------------------
 data UiBordered = UiBordered
   deriving (Eq,Ord,Read,Show,Enum,Bounded)
 
@@ -378,5 +367,26 @@ instance UiClassText UiTransparent where
 
 class UiHasTransparent a where
   transparent :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiStatus
+  = UiSuccess
+  | UiWarning
+  | UiError
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiStatus where
+  uiText UiSuccess = "success"
+  uiText UiWarning = "warning"
+  uiText UiError = "error"
+
+class UiHasStatus a where
+  uiSetStatus :: UiStatus -> a -> a
+
+hasSuccess, hasWarning, hasError :: UiHasStatus a => a -> a
+hasSuccess = uiSetStatus UiSuccess
+hasWarning = uiSetStatus UiWarning
+hasError = uiSetStatus UiError
 
 
