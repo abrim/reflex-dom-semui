@@ -523,3 +523,14 @@ hasWarning = uiSetStatus UiWarning
 hasError = uiSetStatus UiError
 
 
+------------------------------------------------------------------------------
+data UiEqualWidth = UiEqualWidth
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiEqualWidth where
+  uiText UiEqualWidth = "equal width"
+
+class UiHasEqualWidth a where
+  equalWidth :: a -> a
+
+
