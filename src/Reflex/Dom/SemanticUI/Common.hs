@@ -18,6 +18,7 @@ module Reflex.Dom.SemanticUI.Common where
 import           Data.Default
 import           Data.Text (Text)
 import qualified Data.Text as T
+import           Data.Monoid ((<>))
 import           Reflex.Dom
 ------------------------------------------------------------------------------
 
@@ -348,17 +349,6 @@ class UiHasCircular a where
 
 
 ------------------------------------------------------------------------------
-data UiError = UiError
-  deriving (Eq,Ord,Read,Show,Enum,Bounded)
-
-instance UiClassText UiError where
-  uiText UiError = "error"
-
-class UiHasError a where
-  hasError :: a -> a
-
-
-------------------------------------------------------------------------------
 data UiBordered = UiBordered
   deriving (Eq,Ord,Read,Show,Enum,Bounded)
 
@@ -380,3 +370,207 @@ class UiHasTransparent a where
   transparent :: a -> a
 
 
+------------------------------------------------------------------------------
+data UiImageStyle = UiImageStyle
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiImageStyle where
+  uiText UiImageStyle = "image"
+
+class UiHasImageStyle a where
+  imageStyle :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiPointing
+  = UiPointingLeft
+  | UiPointingRight
+  | UiPointingUp
+  | UiPointingDown
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiPointing where
+  uiText UiPointingLeft = "left pointing"
+  uiText UiPointingRight = "right pointing"
+  uiText UiPointingUp = "pointing"
+  uiText UiPointingDown = "pointing below"
+
+class UiHasPointing a where
+  uiSetPointing :: UiPointing -> a -> a
+
+pointingLeft, pointingRight, pointingUp, pointingDown :: UiHasPointing a => a -> a
+pointingLeft = uiSetPointing UiPointingLeft
+pointingRight = uiSetPointing UiPointingRight
+pointingUp = uiSetPointing UiPointingUp
+pointingDown = uiSetPointing UiPointingDown
+
+
+------------------------------------------------------------------------------
+data UiLabelStyle
+  = UiCornerLeft
+  | UiCornerRight
+  | UiTag
+  | UiRibbonLeft
+  | UiRibbonRight
+  -- | UiLabelCircular
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiLabelStyle where
+  uiText UiCornerLeft = "left corner"
+  uiText UiCornerRight = "right corner"
+  uiText UiTag = "tag"
+  uiText UiRibbonLeft = "left ribbon"
+  uiText UiRibbonRight = "right ribbon"
+
+class UiHasLabelStyle a where
+  uiSetLabelStyle :: UiLabelStyle -> a -> a
+
+cornerLeft, cornerRight, tag, ribbonLeft, ribbonRight
+  :: UiHasLabelStyle a => a -> a
+
+cornerLeft = uiSetLabelStyle UiCornerLeft
+cornerRight = uiSetLabelStyle UiCornerRight
+tag = uiSetLabelStyle UiTag
+ribbonLeft = uiSetLabelStyle UiRibbonLeft
+ribbonRight = uiSetLabelStyle UiRibbonRight
+
+
+------------------------------------------------------------------------------
+data UiAttached
+  = UiAttachedLeft
+  | UiAttachedRight
+  | UiAttachedTop
+  | UiAttachedBottom
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiAttached where
+  uiText UiAttachedLeft = "left attached"
+  uiText UiAttachedRight = "right attached"
+  uiText UiAttachedTop = "top attached"
+  uiText UiAttachedBottom = "bottom attached"
+
+class UiHasAttached a where
+  uiSetAttached :: UiAttached -> a -> a
+
+attachedLeft, attachedRight, attachedTop, attachedBottom :: UiHasAttached a => a -> a
+attachedLeft = uiSetAttached UiAttachedLeft
+attachedRight = uiSetAttached UiAttachedRight
+attachedTop = uiSetAttached UiAttachedTop
+attachedBottom = uiSetAttached UiAttachedBottom
+
+
+------------------------------------------------------------------------------
+data UiHorizontal = UiHorizontal
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiHorizontal where
+  uiText UiHorizontal = "horizontal"
+
+class UiHasHorizontal a where
+  horizontal :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiFloating = UiFloating
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiFloating where
+  uiText UiFloating = "floating"
+
+class UiHasFloating a where
+  floating :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiEmpty = UiEmpty
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiEmpty where
+  uiText UiEmpty = "empty"
+
+class UiHasEmpty a where
+  empty :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiLabeled = UiLabeled
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiLabeled where
+  uiText UiLabeled = "labeled"
+
+class UiHasLabeled a where
+  labeled :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiStatus
+  = UiSuccess
+  | UiWarning
+  | UiError
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiStatus where
+  uiText UiSuccess = "success"
+  uiText UiWarning = "warning"
+  uiText UiError = "error"
+
+class UiHasStatus a where
+  uiSetStatus :: UiStatus -> a -> a
+
+hasSuccess, hasWarning, hasError :: UiHasStatus a => a -> a
+hasSuccess = uiSetStatus UiSuccess
+hasWarning = uiSetStatus UiWarning
+hasError = uiSetStatus UiError
+
+
+------------------------------------------------------------------------------
+data UiEqualWidth = UiEqualWidth
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiEqualWidth where
+  uiText UiEqualWidth = "equal width"
+
+class UiHasEqualWidth a where
+  equalWidth :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiInline = UiInline
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiInline where
+  uiText UiInline = "inline"
+
+class UiHasInline a where
+  inline :: a -> a
+
+
+------------------------------------------------------------------------------
+-- This needs to be improved
+data UiWidth = UiWidth Int
+  deriving (Eq,Ord,Read,Show,Bounded)
+
+instance UiClassText UiWidth where
+  uiText (UiWidth i) | i>0 && i<17 = w !! i <> " wide"
+    where w = ["","one","two","three","four","five","six","seven","eight",
+              "nine","ten","eleven","twelve","thirteen","fourteen","fifteen",
+              "sixteen"]
+  uiText _ = ""
+
+instance Default UiWidth where
+  def = UiWidth 1
+
+class UiHasWidth a where
+  uiSetWidth :: UiWidth -> a -> a
+
+
+------------------------------------------------------------------------------
+data UiRequired = UiRequired
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiRequired where
+  uiText UiRequired = "required"
+
+class UiHasRequired a where
+  required :: a -> a
