@@ -370,6 +370,128 @@ class UiHasTransparent a where
 
 
 ------------------------------------------------------------------------------
+data UiImageStyle = UiImageStyle
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiImageStyle where
+  uiText UiImageStyle = "image"
+
+class UiHasImageStyle a where
+  imageStyle :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiPointing
+  = UiPointingLeft
+  | UiPointingRight
+  | UiPointingUp
+  | UiPointingDown
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiPointing where
+  uiText UiPointingLeft = "left pointing"
+  uiText UiPointingRight = "right pointing"
+  uiText UiPointingUp = "pointing"
+  uiText UiPointingDown = "pointing below"
+
+class UiHasPointing a where
+  uiSetPointing :: UiPointing -> a -> a
+
+pointingLeft, pointingRight, pointingUp, pointingDown :: UiHasPointing a => a -> a
+pointingLeft = uiSetPointing UiPointingLeft
+pointingRight = uiSetPointing UiPointingRight
+pointingUp = uiSetPointing UiPointingUp
+pointingDown = uiSetPointing UiPointingDown
+
+
+------------------------------------------------------------------------------
+data UiLabelStyle
+  = UiCornerLeft
+  | UiCornerRight
+  | UiTag
+  | UiRibbonLeft
+  | UiRibbonRight
+  -- | UiLabelCircular
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiLabelStyle where
+  uiText UiCornerLeft = "left corner"
+  uiText UiCornerRight = "right corner"
+  uiText UiTag = "tag"
+  uiText UiRibbonLeft = "left ribbon"
+  uiText UiRibbonRight = "right ribbon"
+
+class UiHasLabelStyle a where
+  uiSetLabelStyle :: UiLabelStyle -> a -> a
+
+cornerLeft, cornerRight, tag, ribbonLeft, ribbonRight
+  :: UiHasLabelStyle a => a -> a
+
+cornerLeft = uiSetLabelStyle UiCornerLeft
+cornerRight = uiSetLabelStyle UiCornerRight
+tag = uiSetLabelStyle UiTag
+ribbonLeft = uiSetLabelStyle UiRibbonLeft
+ribbonRight = uiSetLabelStyle UiRibbonRight
+
+
+------------------------------------------------------------------------------
+data UiAttached
+  = UiAttachedLeft
+  | UiAttachedRight
+  | UiAttachedTop
+  | UiAttachedBottom
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiAttached where
+  uiText UiAttachedLeft = "left attached"
+  uiText UiAttachedRight = "right attached"
+  uiText UiAttachedTop = "top attached"
+  uiText UiAttachedBottom = "bottom attached"
+
+class UiHasAttached a where
+  uiSetAttached :: UiAttached -> a -> a
+
+attachedLeft, attachedRight, attachedTop, attachedBottom :: UiHasAttached a => a -> a
+attachedLeft = uiSetAttached UiAttachedLeft
+attachedRight = uiSetAttached UiAttachedRight
+attachedTop = uiSetAttached UiAttachedTop
+attachedBottom = uiSetAttached UiAttachedBottom
+
+
+------------------------------------------------------------------------------
+data UiHorizontal = UiHorizontal
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiHorizontal where
+  uiText UiHorizontal = "horizontal"
+
+class UiHasHorizontal a where
+  horizontal :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiFloating = UiFloating
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiFloating where
+  uiText UiFloating = "floating"
+
+class UiHasFloating a where
+  floating :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiEmpty = UiEmpty
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiEmpty where
+  uiText UiEmpty = "empty"
+
+class UiHasEmpty a where
+  empty :: a -> a
+
+
+------------------------------------------------------------------------------
 data UiLabeled = UiLabeled
   deriving (Eq,Ord,Read,Show,Enum,Bounded)
 
