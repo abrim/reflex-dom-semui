@@ -370,6 +370,17 @@ class UiHasTransparent a where
 
 
 ------------------------------------------------------------------------------
+data UiLabeled = UiLabeled
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiLabeled where
+  uiText UiLabeled = "labeled"
+
+class UiHasLabeled a where
+  labeled :: a -> a
+
+
+------------------------------------------------------------------------------
 data UiStatus
   = UiSuccess
   | UiWarning

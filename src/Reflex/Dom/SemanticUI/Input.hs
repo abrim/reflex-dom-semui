@@ -35,11 +35,12 @@ data UiInput = UiInput
     , _uiInput_transparent :: Maybe UiTransparent
     , _uiInput_inverted    :: Maybe UiInverted
     , _uiInput_fluid       :: Maybe UiFluid
+    , _uiInput_labeled     :: Maybe UiLabeled
     , _uiInput_custom      :: Maybe Text
     } deriving (Eq,Show)
 
 instance Default UiInput where
-  def = UiInput def def def def def def def def def
+  def = UiInput def def def def def def def def def def
 
 instance UiHasSize UiInput where
   uiSetSize s i = i { _uiInput_size = Just s }
@@ -68,6 +69,9 @@ instance UiHasFluid UiInput where
 instance UiHasCustom UiInput where
   custom s i = i { _uiInput_custom = addCustom s (_uiInput_custom i) }
 
+instance UiHasLabeled UiInput where
+  labeled i = i { _uiInput_labeled = Just UiLabeled }
+
 uiInputAttrs :: UiInput -> Text
 uiInputAttrs UiInput{..} = T.unwords $ catMaybes
     [ uiText <$> _uiInput_size
@@ -78,6 +82,7 @@ uiInputAttrs UiInput{..} = T.unwords $ catMaybes
     , uiText <$> _uiInput_transparent
     , uiText <$> _uiInput_inverted
     , uiText <$> _uiInput_fluid
+    , uiText <$> _uiInput_labeled
     , _uiInput_custom
     ]
 
