@@ -18,6 +18,7 @@ module Reflex.Dom.SemanticUI.Common where
 import           Data.Default
 import           Data.Text (Text)
 import qualified Data.Text as T
+import           Data.Monoid ((<>))
 import           Reflex.Dom
 ------------------------------------------------------------------------------
 
@@ -534,3 +535,42 @@ class UiHasEqualWidth a where
   equalWidth :: a -> a
 
 
+------------------------------------------------------------------------------
+data UiInline = UiInline
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiInline where
+  uiText UiInline = "inline"
+
+class UiHasInline a where
+  inline :: a -> a
+
+
+------------------------------------------------------------------------------
+-- This needs to be improved
+data UiWidth = UiWidth Int
+  deriving (Eq,Ord,Read,Show,Bounded)
+
+instance UiClassText UiWidth where
+  uiText (UiWidth i) | i>0 && i<17 = w !! i <> " wide"
+    where w = ["","one","two","three","four","five","six","seven","eight",
+              "nine","ten","eleven","twelve","thirteen","fourteen","fifteen",
+              "sixteen"]
+  uiText _ = ""
+
+instance Default UiWidth where
+  def = UiWidth 1
+
+class UiHasWidth a where
+  uiSetWidth :: UiWidth -> a -> a
+
+
+------------------------------------------------------------------------------
+data UiRequired = UiRequired
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiRequired where
+  uiText UiRequired = "required"
+
+class UiHasRequired a where
+  required :: a -> a
