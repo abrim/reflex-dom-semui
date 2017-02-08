@@ -7,6 +7,10 @@ module Reflex.Dom.SemanticUI
   , module Reflex.Dom.SemanticUI.Icon
   , module Reflex.Dom.SemanticUI.Input
   , module Reflex.Dom.SemanticUI.Modal
+  , module Reflex.Dom.SemanticUI.Label
+  , module Reflex.Dom.SemanticUI.Form
+  , module Reflex.Dom.SemanticUI.Field
+  , module Reflex.Dom.SemanticUI.Container
   , semanticCSS
   ) where
 
@@ -20,6 +24,10 @@ import           Reflex.Dom.SemanticUI.Dropdown
 import           Reflex.Dom.SemanticUI.Icon
 import           Reflex.Dom.SemanticUI.Input
 import           Reflex.Dom.SemanticUI.Modal
+import           Reflex.Dom.SemanticUI.Label
+import           Reflex.Dom.SemanticUI.Form
+import           Reflex.Dom.SemanticUI.Field
+import           Reflex.Dom.SemanticUI.Container
 ------------------------------------------------------------------------------
 
 
