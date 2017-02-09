@@ -445,6 +445,7 @@ data UiAttached
   | UiAttachedRight
   | UiAttachedTop
   | UiAttachedBottom
+  | UiAttached
   deriving (Eq,Ord,Read,Show,Enum,Bounded)
 
 instance UiClassText UiAttached where
@@ -452,15 +453,18 @@ instance UiClassText UiAttached where
   uiText UiAttachedRight = "right attached"
   uiText UiAttachedTop = "top attached"
   uiText UiAttachedBottom = "bottom attached"
+  uiText UiAttached = "attached"
 
 class UiHasAttached a where
   uiSetAttached :: UiAttached -> a -> a
 
-attachedLeft, attachedRight, attachedTop, attachedBottom :: UiHasAttached a => a -> a
+attachedLeft, attachedRight, attachedTop, attachedBottom, attached
+  :: UiHasAttached a => a -> a
 attachedLeft = uiSetAttached UiAttachedLeft
 attachedRight = uiSetAttached UiAttachedRight
 attachedTop = uiSetAttached UiAttachedTop
 attachedBottom = uiSetAttached UiAttachedBottom
+attached = uiSetAttached UiAttached
 
 
 ------------------------------------------------------------------------------
