@@ -582,3 +582,44 @@ instance UiClassText UiRequired where
 
 class UiHasRequired a where
   required :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiSegmentStyle
+  = UiRaised
+  | UiStacked
+  | UiTallStacked
+  | UiPiled
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiSegmentStyle where
+  uiText UiRaised = "raised"
+  uiText UiStacked = "stacked"
+  uiText UiTallStacked = "tall stacked"
+  uiText UiPiled = "piled"
+
+class UiHasSegmentStyle a where
+  uiSetSegmentStyle :: UiSegmentStyle -> a -> a
+
+raised, stacked, tallStacked, piled :: UiHasSegmentStyle a => a -> a
+raised = uiSetSegmentStyle UiRaised
+stacked = uiSetSegmentStyle UiStacked
+tallStacked = uiSetSegmentStyle UiTallStacked
+piled = uiSetSegmentStyle UiPiled
+
+------------------------------------------------------------------------------
+data UiPadded
+  = UiPadded
+  | UiVeryPadded
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiPadded where
+  uiText UiPadded = "padded"
+  uiText UiVeryPadded = "very padded"
+
+class UiHasPadded a where
+  uiSetPadded :: UiPadded -> a -> a
+
+padded, veryPadded :: UiHasPadded a => a -> a
+padded = uiSetPadded UiPadded
+veryPadded = uiSetPadded UiVeryPadded
