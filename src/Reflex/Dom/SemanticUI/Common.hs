@@ -109,6 +109,7 @@ black = uiSetColor UiBlack
 data UiEmphasis
   = UiPrimary
   | UiSecondary
+  | UiTertiary
   | UiPositive
   | UiNegative
   deriving (Eq,Ord,Read,Show,Enum,Bounded)
@@ -116,15 +117,18 @@ data UiEmphasis
 instance UiClassText UiEmphasis where
   uiText UiPrimary = "primary"
   uiText UiSecondary = "secondary"
+  uiText UiTertiary = "tertiary"
   uiText UiPositive = "positive"
   uiText UiNegative = "negative"
 
 class UiHasEmphasis a where
   uiSetEmphasis :: UiEmphasis -> a -> a
 
-primary, secondary, positive, negative :: UiHasEmphasis a => a -> a
+primary, secondary, tertiary, positive, negative
+  :: UiHasEmphasis a => a -> a
 primary = uiSetEmphasis UiPrimary
 secondary = uiSetEmphasis UiSecondary
+tertiary = uiSetEmphasis UiTertiary
 positive = uiSetEmphasis UiPositive
 negative = uiSetEmphasis UiNegative
 
