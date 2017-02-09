@@ -109,6 +109,7 @@ black = uiSetColor UiBlack
 data UiEmphasis
   = UiPrimary
   | UiSecondary
+  | UiTertiary
   | UiPositive
   | UiNegative
   deriving (Eq,Ord,Read,Show,Enum,Bounded)
@@ -116,15 +117,18 @@ data UiEmphasis
 instance UiClassText UiEmphasis where
   uiText UiPrimary = "primary"
   uiText UiSecondary = "secondary"
+  uiText UiTertiary = "tertiary"
   uiText UiPositive = "positive"
   uiText UiNegative = "negative"
 
 class UiHasEmphasis a where
   uiSetEmphasis :: UiEmphasis -> a -> a
 
-primary, secondary, positive, negative :: UiHasEmphasis a => a -> a
+primary, secondary, tertiary, positive, negative
+  :: UiHasEmphasis a => a -> a
 primary = uiSetEmphasis UiPrimary
 secondary = uiSetEmphasis UiSecondary
+tertiary = uiSetEmphasis UiTertiary
 positive = uiSetEmphasis UiPositive
 negative = uiSetEmphasis UiNegative
 
@@ -441,6 +445,7 @@ data UiAttached
   | UiAttachedRight
   | UiAttachedTop
   | UiAttachedBottom
+  | UiAttached
   deriving (Eq,Ord,Read,Show,Enum,Bounded)
 
 instance UiClassText UiAttached where
@@ -448,15 +453,18 @@ instance UiClassText UiAttached where
   uiText UiAttachedRight = "right attached"
   uiText UiAttachedTop = "top attached"
   uiText UiAttachedBottom = "bottom attached"
+  uiText UiAttached = "attached"
 
 class UiHasAttached a where
   uiSetAttached :: UiAttached -> a -> a
 
-attachedLeft, attachedRight, attachedTop, attachedBottom :: UiHasAttached a => a -> a
+attachedLeft, attachedRight, attachedTop, attachedBottom, attached
+  :: UiHasAttached a => a -> a
 attachedLeft = uiSetAttached UiAttachedLeft
 attachedRight = uiSetAttached UiAttachedRight
 attachedTop = uiSetAttached UiAttachedTop
 attachedBottom = uiSetAttached UiAttachedBottom
+attached = uiSetAttached UiAttached
 
 
 ------------------------------------------------------------------------------
@@ -574,3 +582,44 @@ instance UiClassText UiRequired where
 
 class UiHasRequired a where
   required :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiSegmentStyle
+  = UiRaised
+  | UiStacked
+  | UiTallStacked
+  | UiPiled
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiSegmentStyle where
+  uiText UiRaised = "raised"
+  uiText UiStacked = "stacked"
+  uiText UiTallStacked = "tall stacked"
+  uiText UiPiled = "piled"
+
+class UiHasSegmentStyle a where
+  uiSetSegmentStyle :: UiSegmentStyle -> a -> a
+
+raised, stacked, tallStacked, piled :: UiHasSegmentStyle a => a -> a
+raised = uiSetSegmentStyle UiRaised
+stacked = uiSetSegmentStyle UiStacked
+tallStacked = uiSetSegmentStyle UiTallStacked
+piled = uiSetSegmentStyle UiPiled
+
+------------------------------------------------------------------------------
+data UiPadded
+  = UiPadded
+  | UiVeryPadded
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiPadded where
+  uiText UiPadded = "padded"
+  uiText UiVeryPadded = "very padded"
+
+class UiHasPadded a where
+  uiSetPadded :: UiPadded -> a -> a
+
+padded, veryPadded :: UiHasPadded a => a -> a
+padded = uiSetPadded UiPadded
+veryPadded = uiSetPadded UiVeryPadded
