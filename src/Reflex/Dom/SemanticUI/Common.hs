@@ -632,3 +632,120 @@ padded = uiSetPadded UiPadded
 veryPadded = uiSetPadded UiVeryPadded
 verticallyPadded = uiSetPadded UiVerticallyPadded
 horizontallyPadded = uiSetPadded UiHorizontallyPadded
+
+------------------------------------------------------------------------------
+data UiDivided
+  = UiDivided
+  | UiVerticallyDivided
+  | UiCelled
+  | UiInternallyCelled
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiDivided where
+  uiText UiDivided = "divided"
+  uiText UiVerticallyDivided = "vertically divided"
+  uiText UiCelled = "celled"
+  uiText UiInternallyCelled = "celled"
+
+class UiHasDivided a where
+  uiSetDivided :: UiDivided -> a -> a
+
+divided, verticallyDivided, celled, internallyCelled :: UiHasDivided a => a -> a
+divided = uiSetDivided UiDivided
+verticallyDivided = uiSetDivided UiVerticallyDivided
+celled = uiSetDivided UiCelled
+internallyCelled = uiSetDivided UiInternallyCelled
+
+------------------------------------------------------------------------------
+data UiColumns = UiColumns Int
+  deriving (Eq,Ord,Read,Show,Bounded)
+
+instance UiClassText UiColumns where
+  uiText (UiColumns i) | i>0 && i<17 = w !! i <> " column"
+    where w = ["","one","two","three","four","five","six","seven","eight",
+              "nine","ten","eleven","twelve","thirteen","fourteen","fifteen",
+              "sixteen"]
+  uiText _ = ""
+
+instance Default UiColumns where
+  def = UiColumns 1
+
+class UiHasColumns a where
+  columns :: Int -> a -> a
+
+------------------------------------------------------------------------------
+-- data UiFloated
+--   = UiRightFloated
+--   | UiLeftFloated
+--   deriving (Eq,Ord,Read,Show,Enum,Bounded)
+--
+-- instance UiClassText UiFloated where
+--   uiText UiRightFloated = "right floated"
+--   uiText UiLeftFloated = "left floated"
+--
+-- class UiHasFloated a where
+--   uiSetFloated :: UiFloated -> a -> a
+--
+-- leftFloated, rightFloated :: UiHasFloated a => a -> a
+-- leftFloated = uiSetFloated UiLeftFloated
+-- rightFloated = uiSetFloated UiRightFloated
+
+------------------------------------------------------------------------------
+data UiStretched = UiStretched
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiStretched where
+  uiText UiStretched = "stretched"
+
+class UiHasStretched a where
+  stretched :: a -> a
+
+------------------------------------------------------------------------------
+data UiRelaxed = UiRelaxed
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiRelaxed where
+  uiText UiRelaxed = "relaxed"
+
+class UiHasRelaxed a where
+  relaxed :: a -> a
+
+------------------------------------------------------------------------------
+data UiCentered = UiCentered
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiCentered where
+  uiText UiCentered = "centered"
+
+class UiHasCentered a where
+  centered :: a -> a
+
+
+------------------------------------------------------------------------------
+data UiVerticalAlignment
+    = UiTopAligned
+    | UiMiddleAligned
+    | UiBottomAligned
+  deriving (Eq,Ord,Read,Show,Enum,Bounded)
+
+instance UiClassText UiVerticalAlignment where
+  uiText UiTopAligned = "top aligned"
+  uiText UiMiddleAligned = "middle aligned"
+  uiText UiBottomAligned = "bottom aligned"
+
+class UiHasVerticalAlignment a where
+  uiSetVerticalAlignment :: UiVerticalAlignment -> a -> a
+
+topAligned, middleAligned, bottomAligned :: UiHasVerticalAlignment a => a -> a
+topAligned = uiSetVerticalAlignment UiTopAligned
+middleAligned = uiSetVerticalAlignment UiMiddleAligned
+bottomAligned = uiSetVerticalAlignment UiBottomAligned
+
+
+-------------------------------------------------------------------------------
+-- Common styles for UiCustom elements
+
+clearing, floatLeft, floatRight :: UiHasCustom a => a -> a
+clearing = custom "clearing"
+floatLeft = custom "left floated"
+floatRight = custom "right floated"
