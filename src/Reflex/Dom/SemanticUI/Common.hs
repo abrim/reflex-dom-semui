@@ -608,18 +608,27 @@ tallStacked = uiSetSegmentStyle UiTallStacked
 piled = uiSetSegmentStyle UiPiled
 
 ------------------------------------------------------------------------------
+-- The SemanticUI docs are unclear as to whether vertical/horizonta (shown with
+-- Grid) and very (shown with segment) are mutually exclusive
 data UiPadded
   = UiPadded
   | UiVeryPadded
+  | UiVerticallyPadded
+  | UiHorizontallyPadded
   deriving (Eq,Ord,Read,Show,Enum,Bounded)
 
 instance UiClassText UiPadded where
   uiText UiPadded = "padded"
   uiText UiVeryPadded = "very padded"
+  uiText UiVerticallyPadded = "vertically padded"
+  uiText UiHorizontallyPadded = "horizontally padded"
 
 class UiHasPadded a where
   uiSetPadded :: UiPadded -> a -> a
 
-padded, veryPadded :: UiHasPadded a => a -> a
+padded, veryPadded, verticallyPadded, horizontallyPadded
+  :: UiHasPadded a => a -> a
 padded = uiSetPadded UiPadded
 veryPadded = uiSetPadded UiVeryPadded
+verticallyPadded = uiSetPadded UiVerticallyPadded
+horizontallyPadded = uiSetPadded UiHorizontallyPadded
