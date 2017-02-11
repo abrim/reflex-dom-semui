@@ -25,11 +25,12 @@ data UiSegment = UiSegment
   , _uiSegment_compact    :: Maybe UiCompact
   , _uiSegment_emphasis   :: Maybe UiEmphasis
   , _uiSegment_circular   :: Maybe UiCircular
+  , _uiSegment_alignment  :: Maybe UiAlignment
   , _uiSegment_custom     :: Maybe Text
   } deriving (Eq, Show)
 
 instance Default UiSegment where
-  def = UiSegment def def def def def def def def def def def
+  def = UiSegment def def def def def def def def def def def def
 
 instance UiHasSegmentStyle UiSegment where
   uiSetSegmentStyle p s = s { _uiSegment_style = Just p }
@@ -61,6 +62,12 @@ instance UiHasEmphasis UiSegment where
 instance UiHasCircular UiSegment where
   circular s = s { _uiSegment_circular = Just UiCircular }
 
+instance UiHasAlignment UiSegment where
+  uiSetAlignment a s = s { _uiSegment_alignment = Just a }
+
+instance UiHasCustom UiSegment where
+  custom c s = s { _uiSegment_custom = addCustom c (_uiSegment_custom s) }
+
 uiSegmentAttrs :: UiSegment -> Text
 uiSegmentAttrs UiSegment{..} = T.unwords $ catMaybes
   [ uiText <$> _uiSegment_style
@@ -73,6 +80,7 @@ uiSegmentAttrs UiSegment{..} = T.unwords $ catMaybes
   , uiText <$> _uiSegment_compact
   , uiText <$> _uiSegment_emphasis
   , uiText <$> _uiSegment_circular
+  , uiText <$> _uiSegment_alignment
   , _uiSegment_custom
   ]
 
