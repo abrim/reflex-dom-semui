@@ -570,7 +570,7 @@ instance Default UiWidth where
   def = UiWidth 1
 
 class UiHasWidth a where
-  uiSetWidth :: UiWidth -> a -> a
+  width :: Int -> a -> a
 
 
 ------------------------------------------------------------------------------

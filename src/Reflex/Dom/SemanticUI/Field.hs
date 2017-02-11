@@ -36,7 +36,7 @@ instance UiHasStatus UiField where
   uiSetStatus s f = f { _uiField_status = Just s }
 
 instance UiHasWidth UiField where
-  uiSetWidth w f = f { _uiField_width = Just w }
+  width w f = f { _uiField_width = Just $ UiWidth w }
 
 instance UiHasRequired UiField where
   required f = f { _uiField_required = Just UiRequired }
