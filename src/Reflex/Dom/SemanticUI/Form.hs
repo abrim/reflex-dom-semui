@@ -33,6 +33,9 @@ instance UiHasStatus UiForm where
 instance UiHasEqualWidth UiForm where
   equalWidth f = f { _uiForm_equalWidth = Just UiEqualWidth }
 
+instance UiHasCustom UiForm where
+  custom c f = f { _uiForm_custom = addCustom c (_uiForm_custom f) }
+
 uiFormAttrs :: UiForm -> Text
 uiFormAttrs UiForm {..} = T.unwords $ catMaybes
   [ uiText <$> _uiForm_loading

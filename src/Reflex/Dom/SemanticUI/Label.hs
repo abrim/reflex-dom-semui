@@ -11,7 +11,6 @@ import qualified Data.Text as T
 import           Reflex.Dom hiding (fromJSString)
 ------------------------------------------------------------------------------
 import           Reflex.Dom.SemanticUI.Common
-import           Reflex.Dom.SemanticUI.Icon
 ------------------------------------------------------------------------------
 
 data UiLabel = UiLabel

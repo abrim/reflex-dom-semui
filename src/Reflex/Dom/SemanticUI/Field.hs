@@ -59,4 +59,4 @@ uiField
 uiField fDyn children = do
     elDynAttr "div" (mkAttrs <$> fDyn) children
   where
-    mkAttrs i = "class" =: T.unwords ["ui", uiFieldAttrs i, "Field"]
+    mkAttrs i = "class" =: T.unwords [uiFieldAttrs i, "field"]
