@@ -39,6 +39,7 @@ library
     Reflex.Dom.SemanticUI.Field
     Reflex.Dom.SemanticUI.Segment
     Reflex.Dom.SemanticUI.Grid
+    Reflex.Dom.Attributes
 
   other-modules:
     GHCJS.Compat

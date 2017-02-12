@@ -20,6 +20,7 @@ import           Data.Maybe
 import           Data.Text (Text)
 import qualified Data.Text as T
 import           Reflex.Dom hiding (fromJSString)
+import           Reflex.Dom.Attributes
 ------------------------------------------------------------------------------
 import           Reflex.Dom.SemanticUI.Common
 import           Reflex.Dom.SemanticUI.Icon
@@ -92,8 +93,8 @@ instance UiHasCustom UiButton where
 ------------------------------------------------------------------------------
 -- | Helper function mostly intended for internal use.  Exported for
 -- completeness.
-uiButtonAttrs :: UiButton -> Text
-uiButtonAttrs UiButton{..} = T.unwords $ catMaybes
+uiButtonStyles :: UiButton -> Text
+uiButtonStyles UiButton{..} = T.unwords $ catMaybes
     [ uiText <$> _uiButton_emphasis
     , uiText <$> _uiButton_color
     , uiText <$> _uiButton_basic
@@ -107,6 +108,11 @@ uiButtonAttrs UiButton{..} = T.unwords $ catMaybes
     , uiText <$> _uiButton_circular
     , _uiButton_custom
     ]
+
+------------------------------------------------------------------------------
+-- | Returns a full list of attributes from the UiButton record.
+uiButtonAttrs :: UiButton -> AttributeMap
+uiButtonAttrs b = "class" =: T.unwords ["ui", uiButtonStyles b, "button"]
 
 ------------------------------------------------------------------------------
 -- | The primary function for creating Semantic UI buttons.  Much of Semantic
@@ -123,10 +129,8 @@ uiButton
     -> m ()
     -> m (Event t ())
 uiButton bDyn children = do
-    (e,_) <- elDynAttr' "button" (mkAttrs <$> bDyn) children
+    (e,_) <- elDynAttr' "button" (uiButtonAttrs <$> bDyn) children
     return $ domEvent Click e
-  where
-    mkAttrs b = "class" =: T.unwords ["ui", uiButtonAttrs b, "button"]
 
 data UiButtonAnimationType
   = HorizontalAnimation
@@ -152,12 +156,10 @@ uiButtonAnimated
     -- ^ The hidden section
     -> m (Event t ())
 uiButtonAnimated anim bDyn visible hidden = do
-    (e,_) <- elDynAttr' "button" (mkAttrs <$> bDyn) $ do
+    (e,_) <- elDynAttr' "button" (uiButtonAttrs <$> bDyn) $ do
       divClass "visible content" visible
       divClass "hidden content" hidden
     return $ domEvent Click e
-  where
-    mkAttrs b = "class" =: T.unwords ["ui", uiButtonAttrs b, uiText anim, "button"]
 
 ------------------------------------------------------------------------------
 -- | Implements a labeled icon button.  The icon can be on the left or the
